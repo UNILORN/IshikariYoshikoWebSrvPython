@@ -7,8 +7,7 @@ import time
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-
-if __name__ == '__main__':
+def WebsocketConnect():
     dotenv_path = join(dirname(__file__), '.env')
     load_dotenv(dotenv_path)
     
@@ -19,9 +18,16 @@ if __name__ == '__main__':
     ws_url = url + "?" + "channel_id=" + channel + "&access_token=" + token
 
     ws = create_connection(ws_url)
-    while True:
+    return ws
+
+def WebsocketReceive(ws):
+     while True:
         result =  ws.recv()
         print(result)
+
+if __name__ == '__main__':
+    ws = WebsocketConnect()
+    WebsocketReceive(ws)
 
     ws.close()
 
